@@ -2,17 +2,21 @@
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
+        if len(s) == 1:
+            return 1
 
-        longest = ""
-        substring = ""
+        longest = []
+        substring = []
 
-        for char in s:            
-            if char in substring:
-                if len(substring) >= len(longest):
-                    longest = substring
-                substring = char
+        for i in range(len(s)):
+            next = s[i::]
+            for j in range(len(next)): 
+                if next[j] in substring:
+                    if len(substring) >= len(longest):
+                        longest = substring
+                    substring = []
+                    break
+                else: 
+                    substring.append(next[j])
 
-            else: 
-                substring += char
-            
-        return len(longest)
+        return max(len(longest),len(substring))
