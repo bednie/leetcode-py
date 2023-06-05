@@ -1,3 +1,3 @@
 # leetcode-py
 
-Leetcode in Python.
+Leetcode Python.
