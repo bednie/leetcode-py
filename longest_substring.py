@@ -31,7 +31,7 @@ class Solution2:
         max_len = 0
 
         for right,char in enumerate(s):
-            if char in seen and left <= seen[char]:
+            if char in seen :#and left <= seen[char]:
                 left = seen[char] + 1 
                 seen.pop(char)
 
