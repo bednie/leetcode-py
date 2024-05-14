@@ -6,5 +6,4 @@ class Solution:
         """
         Do not return anything, modify s in-place instead.
         """
-        temp = reversed(s)
-        s[:] = temp
+        s.reverse()
