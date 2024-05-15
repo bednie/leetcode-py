@@ -1,23 +1,22 @@
 class Solution:
     def reverse(self, x: int) -> int:
-        max = (2 ** 31) - 1 
-        min = -(2 ** 31)
-        sign = 1
+        maximum =  2_147_483_647
+        minimum = -2_147_483_648
 
-        x = str(x)
-        x = x[::-1]
-        if x[-1] == "-":
-            x = x[:-1]
-            sign = -1
-            
-        x = int(x) * sign
+        if x < 0:
+            x = str(x)
+            x = "-" + x[:0:-1]
+        else:
+            x = str(x) 
+            x = x[::-1]
         
-        if x <= min or x >= max:
+        x = int(x)
+        
+        if x <= minimum or x >= maximum:
             return 0
 
         return x
 
 
 sol = Solution()
-x = 8463847412
-print(x, sol.reverse(x))
+assert sol.reverse(1563847412) == 0, "Something went wrong!"
