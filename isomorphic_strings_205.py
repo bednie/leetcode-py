@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
         s_map = {}
@@ -17,6 +20,21 @@ class Solution:
 
         for i, j in zip(s_map, t_map):
             if s_map[i] != t_map[j]:
+                return False
+
+        return True
+
+
+class Solution2:
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        s_map = defaultdict(list)
+        t_map = defaultdict(list)
+
+        for i in range(len(s)):
+            s_map[s[i]].append(i)
+            t_map[t[i]].append(i)
+
+            if s_map[s[i]] != t_map[t[i]]:
                 return False
 
         return True
