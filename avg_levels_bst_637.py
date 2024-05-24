@@ -16,20 +16,19 @@ class Solution:
         # bfs
         queue = [root]
         while queue:
-            # average for this level
-            level_sum = 0
-            for node in queue:
-                level_sum += node.val
-            averages.append(level_sum / len(queue))
-
-            # get next level
+            length = len(queue)
             temp = []
+            level_sum = 0
+
             while queue:
                 node = queue.pop(0)
+                level_sum += node.val
                 if node.left:
                     temp.append(node.left)
                 if node.right:
                     temp.append(node.right)
+
+            averages.append(level_sum / length)
             queue += temp
 
         return averages
