@@ -23,7 +23,12 @@ class Solution:
                         i != start and i != end and start != end
                     ):
                         ans.add(tuple([nums[start], nums[end], nums[i]]))
+
                     start += 1
                     end -= 1
+
+                    while start < end and nums[start] == nums[start-1]:
+                        start += 1
+                    
 
         return list(ans)
