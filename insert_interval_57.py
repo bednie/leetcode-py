@@ -4,7 +4,6 @@ from typing import List
 class Solution:
     def insert(
         self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-        # annoying cases
         if not intervals:
             return [newInterval]
 
@@ -30,7 +29,6 @@ class Solution:
             else: 
                 break
 
-        # range 
         if i <= j:
             newInterval = [min(intervals[i][0], newInterval[0]), max(intervals[j][1], newInterval[1])]
 
