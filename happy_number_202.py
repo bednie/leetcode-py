@@ -5,7 +5,6 @@ class Solution:
         while nn > 0:
             d = nn % 10
             m += d * d
-            nn -= d
             nn //= 10
 
         if m == 1:
