@@ -7,22 +7,22 @@ class Solution:
         while matrix:
             # top
             if matrix:
-                ans.extend(matrix[0])
-                matrix.pop(0)
+                ans.extend(matrix.pop(0))
 
             # right
             if matrix:
                 for i in matrix:
-                    ans.append(i.pop())
+                    if i:
+                        ans.append(i.pop())
 
             # bottom
             if matrix:
-                ans.extend(reversed(matrix[-1]))
-                matrix.pop()
+                ans.extend(reversed(matrix.pop()))
 
             # left
             if matrix:
                 for i in matrix[::-1]:
-                    ans.append(i.pop(0))
+                    if i:
+                        ans.append(i.pop(0))
 
         return ans
