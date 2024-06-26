@@ -2,27 +2,35 @@ from typing import List
 
 
 class Solution:
-    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
-        ans = []
-        while matrix:
-            # top
-            if matrix:
-                ans.extend(matrix.pop(0))
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        if not matrix or target < matrix[0][0] or target > matrix[-1][-1]:
+            return False
 
-            # right
-            if matrix:
-                for i in matrix:
-                    if i:
-                        ans.append(i.pop())
+        target_list = []
+        i, j = 0, len(matrix) - 1
+        while i <= j:
+            mid = (i + j) // 2
+            if target < matrix[mid][0]:
+                j = mid - 1
 
-            # bottom
-            if matrix:
-                ans.extend(reversed(matrix.pop()))
+            elif matrix[mid][-1] < target:
+                i = mid + 1
 
-            # left
-            if matrix:
-                for i in matrix[::-1]:
-                    if i:
-                        ans.append(i.pop(0))
+            else:
+                target_list = matrix[mid]
+                break
 
-        return ans
+        left, right = 0, len(target_list) - 1
+        while left <= right and target_list:
+            mid = (left + right) // 2
+            if target > target_list[mid]:
+                left = mid + 1
+
+            elif target < target_list[mid]:
+                right = mid - 1
+
+            else:
+                return target == target_list[mid]
+
+        else:
+            return False
