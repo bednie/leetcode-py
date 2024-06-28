@@ -8,6 +8,7 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         deque = [root]
