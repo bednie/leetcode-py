@@ -1,3 +1,3 @@
 # leetcode-py
 
-Leetcode Python.
+Some Python3 leetcode solutions.
