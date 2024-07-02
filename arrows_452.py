@@ -3,7 +3,7 @@ from typing import List
 
 class Solution:
     def findMinArrowShots(self, points: List[List[int]]) -> int:
-        #points.sort()
+        points.sort()
         arrows = []
         for p in points:
             if not arrows:
@@ -16,5 +16,4 @@ class Solution:
             else:
                 arrows.append(p)
 
-        #print(arrows)
         return len(arrows)
