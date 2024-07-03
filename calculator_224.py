@@ -36,5 +36,21 @@ class Solution:
             else:
                 return x
 
-        tokens = [i for i in s if i != " "]
+        tokens = []  # [i for i in s if i != " "]
+        i = 0
+        while i < len(s):
+            if s[i] == " ":
+                i += 1
+
+            elif not s[i].isdigit():
+                tokens.append(s[i])
+                i += 1
+
+            else:
+                if tokens and tokens[-1].isdigit():
+                    tokens[-1] += s[i]
+                else:
+                    tokens.append(s[i])
+                i += 1
+
         return evaluate(tokens, 0)
