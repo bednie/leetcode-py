@@ -36,7 +36,7 @@ class Solution:
             else:
                 return x
 
-        tokens = []  # [i for i in s if i != " "]
+        tokens = []
         i = 0
         while i < len(s):
             if s[i] == " ":
