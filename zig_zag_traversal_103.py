@@ -18,25 +18,24 @@ class Solution:
         while q:
             temp = []
             vals = []
-            for i in q[::order]:
-                if order == 1:
-                    node = q.pop(0)
-                    if node:
-                        vals.append(node.val)
-
-                elif order == -1:
-                    node = q.pop()
-                    if node:
-                        vals.append(node.val)
+            for i in q[::-1]:
+                node = q.pop()
 
                 if node:
-                    temp.append(node.left)
-                    temp.append(node.right)
+                    vals.append(node.val)
+                    if order == 1:
+                        temp.append(node.left)
+                        temp.append(node.right)
+                    else:
+                        temp.append(node.right)
+                        temp.append(node.left)
 
-            order *= -1
             if vals:
                 result.append(vals)
+
             if temp:
                 q.extend(temp)
+
+            order *= -1
 
         return result
