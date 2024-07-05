@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 
 # Definition for a binary tree node.
