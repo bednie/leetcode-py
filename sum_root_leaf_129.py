@@ -11,18 +11,20 @@ class TreeNode:
 
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
-        def helper(root: Optional[TreeNode], sums: list, s: str):
+        def helper(root: Optional[TreeNode], sums: list, s: int):
             if not root:
-                return
+                return 
 
-            s += str(root.val)
+            s *= 10
+            s += root.val
 
             if not root.left and not root.right:
-                sums.append(int(s))
-
+                sums.append(s)
+                
             helper(root.right, sums, s)
             helper(root.left, sums, s)
+            
 
         sums = []
-        helper(root, sums, "")
+        helper(root, sums, 0)
         return sum(sums)
