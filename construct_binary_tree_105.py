@@ -11,16 +11,9 @@ class TreeNode:
 
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        def helper(
-            root: Optional[TreeNode], preorder: List[int], inorder: List[int]
-        ) -> Optional[TreeNode]:
-            if not preorder or not inorder:
-                return None
-            root = TreeNode(preorder.pop(0))
-            root.left = helper(root, preorder, inorder[: inorder.index(root.val)])
-            root.right = helper(root, preorder, inorder[inorder.index(root.val) + 1 :])
-            return root
-
-        root = None
-        root = helper(root, preorder, inorder)
+        if not preorder or not inorder:
+            return None
+        root = TreeNode(preorder.pop(0))
+        root.left = self.buildTree(preorder, inorder[:inorder.index(root.val)])
+        root.right = self.buildTree(preorder, inorder[inorder.index(root.val)+1:])
         return root
