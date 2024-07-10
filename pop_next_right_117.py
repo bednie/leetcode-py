@@ -36,6 +36,3 @@ class Solution:
             dq = temp
 
         return root
-
-
-
