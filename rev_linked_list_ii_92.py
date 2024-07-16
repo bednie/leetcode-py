@@ -15,7 +15,7 @@ class Solution:
         l = head
         temp = []
 
-        for i in range(1, right):
+        for i in range(1, right + 1):
             if i >= left:
                 temp.append(l)
             l = l.next
