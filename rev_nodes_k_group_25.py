@@ -24,13 +24,12 @@ class Solution:
         pre = ListNode(val=-1, next=head)
         node = head
         start = pre
-        
-        while node:
 
+        while node:
             stack.append(node)
             node = node.next
-            
-            if len(stack) == k:  
+
+            if len(stack) == k:
                 start.next = stack[-1]
                 start = start.next
                 stack[0].next = node
