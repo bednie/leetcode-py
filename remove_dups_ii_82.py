@@ -1,4 +1,3 @@
-from collections import defaultdict
 from typing import Optional
 
 
@@ -16,17 +15,15 @@ class Solution:
 
         res = result = ListNode()
         node = head
-        skip = defaultdict(int)
+        skip = [0] * 256
 
         while node:
-            skip[node.val] += 1
+            skip[node.val + 100] += 1
             node = node.next
-
-        print(skip)
 
         node = head
         while node:
-            if skip[node.val] == 1:
+            if skip[node.val + 100] == 1:
                 res.next = node
                 res = res.next
             node = node.next
