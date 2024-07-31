@@ -1,4 +1,12 @@
 class LRUCache:
+    def __init__(self, capacity: int):
+        self.lookup = {}
+        self.capacity = capacity
+        self.length = 0
+        self.head = self.ListNode(val=-999)
+        self.tail = self.ListNode(val=-999)
+        self.head.next, self.tail.prev = self.tail, self.head
+
     # Definition for doubly-linked list.
     class ListNode:
         def __init__(self, val=0, prev=None, next=None):
@@ -6,43 +14,85 @@ class LRUCache:
             self.prev = prev
             self.next = next
 
-        def __str__(self):
-            return f"{id(self)} ListNode[val={self.val}, prev={self.prev}, next={self.next}]"
-
-    def __init__(self, capacity: int):
-        self.lookup = {}
-        self.capacity = capacity
-        self.length = 0
-        self.lru = None
-        self.head = None
-        self.tail = None
-
     def get(self, key: int) -> int:
-        if key in self.lookup:
-            return self.lookup[key]
-            # update lru
 
-        else:
-            return -1
+        print("---")
+        print("get")
+        node = self.head
+        while node:
+            print(node.val, node.prev, node.next)
+            node = node.next
+        print("---")
+
+        return -1
 
     def put(self, key: int, value: int) -> None:
-        if key in self.lookup:
+        # initialize on first put
+        if self.head.next == None:
+            self.head.next = self.ListNode(val=key, prev=self.head, next=self.tail)
             self.lookup[key] = value
-            # update lru
 
-        else:
-            # initialize on first put
-            if self.head == None:
-                self.head = self.ListNode(val=key, prev=self.ListNode(-999), next=self.ListNode(999))
-                self.lru = self.head
+        if key not in self.lookup:
 
             self.length += 1
             self.lookup[key] = value
+
+
+            # insert in cache
+            node = self.head
+            while node.next:
+                node = node.next
+
+            node.next = self.ListNode(val=key, prev=node, next=None)
+
+            # evict
+            # TODO
+
+            # update
+            # TODO
+
+        print("---")
+        print("put")
+        node = self.head
+        while node:
+            print(id(node), node.val, id(node.prev), id(node.next))
+            print("********")
+            node = node.next
+        print("---")
+
+    def update_cache(self, key) -> None:
+        if self.head.val == key:
+            return
+
+        node = self.head
+        while node:
+            if node.val == key:
+                node.prev.next = node.next
+                node.next.prev = node.prev
+
+                self.head.prev = node
+                node.next = self.head
+                self.head = node
+
+                return
+
+            node = node.next
+
+        if self.length < self.capacity:
+            node = self.ListNode(val=key, prev=None, next=self.head)
+            self.head.prev = node
+            self.length += 1
+
+            return
+
+        if self.length  self.capacity:
+            node = self.ListNode(val=key, prev=None, next=self.head)
+            self.head.prev = node
+            self.length += 1
             
-            print(self.head)
-            # if length > capacity:
-            #   evict lru
-            #   update lru
+            return
+
+
 
 
 # Your LRUCache object will be instantiated and called as such:
