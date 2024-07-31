@@ -10,6 +10,8 @@ class Node:
 
 class Solution:
     def cloneGraph(self, node: Optional["Node"]) -> Optional["Node"]:
+        # return copy.deepcopy(node)
+
         def dfs(node: Optional["Node"], seen: set) -> Optional["Node"]:
             if not node:
                 return None
