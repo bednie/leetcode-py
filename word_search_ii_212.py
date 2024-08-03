@@ -1,98 +1,73 @@
-from typing import List
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+        self.word = None
 
 
 class Trie:
-        class TrieNode:
-            def __init__(self):
-                # 26 lowercase English chars, last slot for end of word ('{')
-                self.children = [None] * 27
+    def __init__(self):
+        self.root = TrieNode()
 
-        def __init__(self):
-            self.root = [None] * 27
+    def insert(self, word: str) -> None:
+        whole_word = word
+        current = self.root
 
-        def insert(self, word: str) -> None:
-            children = self.root
-            for c in word:
-                index = ord(c) - 97
-                if not children[index]:
-                    children[index] = self.TrieNode().children
-                children = children[index]
+        for c in word:
+            if c not in current.children:
+                current.children[c] = TrieNode()
+            current = current.children[c]
 
-            children[26] = "{"
+        current.is_end = True
+        current.word = whole_word
 
-        def search(self, word: str) -> bool:
-            return self.startsWith(word + "{")
+    def search(self, word: str) -> bool:
+        current = self.root
 
-        def startsWith(self, prefix: str) -> bool:
-            children = self.root
+        for c in word:
+            if c not in current.children:
+                return False
+            current = current.children[c]
 
-            for c in prefix:
-                index = ord(c) - 97
-                if not children[index]:
-                    return False
-                children = children[index]
+        return current.is_end
 
-            return True
-    
 
 class Solution:
-    def exist(self, board: List[List[str]], word: str) -> bool:
-        def dfs(word: str, seen: list):
-            if not word:
-                self.result = True
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        def search(i: int, j: int, node: TrieNode, length: int):
+            if i < 0 or i >= self.m or j < 0 or j >= self.n or length > 10:
                 return
 
-            i,j = seen[-1]
+            # choose
+            c = board[i][j]
 
-            n = (i-1,j) if i-1 >= 0 else None
-            s = (i+1,j) if i+1 < self.m else None
-            e = (i,j+1) if j+1 < self.n else None
-            w = (i,j-1) if j-1 >= 0 else None
+            if c not in node.children:
+                return
 
-            for c in [n,s,e,w]:
-                if c and self.board[c[0]][c[1]] == word[0] and c not in seen:
-                    s = seen + [c]
-                    dfs(word[1:], s)
+            node = node.children[c]
+            if node.is_end:
+                self.result.append(node.word)
+                node.is_end = False
 
-            return
+            # explore
+            board[i][j] = None
+            for di, dj in self.dirs:
+                search(i + di, j + dj, node, length + 1)
 
-        self.m = len(board)
-        self.n = len(board[0])
-        self.board = board
-        self.result = False
+            # unchoose
+            board[i][j] = c
+
+        self.dirs = ((-1, 0), (1, 0), (0, 1), (0, -1))
+        self.m, self.n = len(board), len(board[0])
+        self.result = []
+        trie = Trie()
+
+        for word in words:
+            trie.insert(word)
+
         for i in range(self.m):
             for j in range(self.n):
-                if self.board[i][j] == word[0]:
-                    dfs(word[1:], [(i,j)])
+                if board[i][j] in trie.root.children:
+                    search(i, j, trie.root, 0)
 
         return self.result
-
-    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
-        # sort words in reverse alpha order: apples, apple, app
-        # then check trie: if word not in trie, check board with dfs 
-        # (use seen and length to search). if word in board, insert into trie so
-        # shorter words that share a prefix can be found efficiently.
-
-        # longest possile word is a spiral around the whole board
-        # set of seen coords is enough to avoid overlaps and invalid paths.
-  
-        words = sorted(words, key=len, reverse=True)
-        trie = Trie()
-        result = []
-
-        for w in words:
-            if trie.startsWith(w):
-                print(f'{w} exists in trie')
-                result.append(w)
-
-            if self.exist(board, w):
-                print(f'{w} exists in board')
-                trie.insert(w)
-                result.append(w)
-
-
-        print(result) 
-
-        return result
-    
-
