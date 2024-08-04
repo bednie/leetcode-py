@@ -1,3 +1,14 @@
+"""
+With help from other LC users solutions.
+My original idea seemed to be a correct
+solution but too slow, since it did not
+prune the search space enough, and
+repeated work.
+"""
+
+from typing import List
+
+
 class TrieNode:
     def __init__(self):
         self.children = {}
