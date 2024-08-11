@@ -17,22 +17,25 @@ class Solution:
                 for di, dj in self.dirs:
                     search(i + di, j + dj, board)
 
-            return
-
         def border(coord: tuple, direction: tuple):
             i, j = coord
             di, dj = direction
 
+            # a cell "inherits" the surroundedness of
+            # its neighbor in that direction
             if coord in self.memo:
                 return self.memo[coord]
 
+            # reached border without finding an 'X'
             if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]):
                 self.memo[coord] = False
                 return False
 
+            # found an 'O', keep going in same direction
             if board[i][j] == "o":
                 return border((i + di, j + dj), direction)
 
+            # bordered by 'X'
             if board[i][j] == "X":
                 self.memo[coord] = True
                 return True
@@ -42,6 +45,7 @@ class Solution:
         self.surrounded = {}
         self.memo = {}
         self.count = 0
+
         for i in range(len(board)):
             for j in range(len(board[0])):
                 if board[i][j] == "O":
@@ -52,12 +56,12 @@ class Solution:
 
         for r in range(self.count):
             for c in self.regions[r]:
-                n = border(c, self.dirs[0])
-                s = border(c, self.dirs[1])
-                e = border(c, self.dirs[2])
-                w = border(c, self.dirs[3])
-
-                if n and s and e and w:
+                if (
+                    border(c, self.dirs[0])
+                    and border(c, self.dirs[1])
+                    and border(c, self.dirs[2])
+                    and border(c, self.dirs[3])
+                ):
                     self.surrounded[r].append(c)
 
             if self.regions[r] == self.surrounded[r]:
