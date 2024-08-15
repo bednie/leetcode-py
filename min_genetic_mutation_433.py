@@ -6,7 +6,7 @@ class Solution:
     def minMutation(self, startGene: str, endGene: str, bank: List[str]) -> int:
         def xor(a, b):
             xored = 0
-            for i in range(len(a)):
+            for i in range(8):
                 xored += 1 if (ord(a[i]) ^ ord(b[i])) != 0 else 0
             return xored
 
@@ -23,11 +23,11 @@ class Solution:
         while dq:
             edits, gene = dq.pop(0)
 
-            if gene == endGene:
-                return edits
-
             for g in bank:
                 if xor(gene, g) == 1 and g not in visited:
+                    if g == endGene:
+                        return edits + 1
+
                     visited.add(g)
                     dq.append((edits + 1, g))
 
