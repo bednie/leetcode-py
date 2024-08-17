@@ -1,3 +1,4 @@
+from string import ascii_lowercase
 from typing import List
 
 
@@ -10,14 +11,13 @@ class Solution:
 
         dq = [(1, beginWord)]
         length = len(beginWord)
-        alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r','s','t','u','v','w','x','y','z']
 
         while dq:
             edits, word = dq.pop(0)
 
             for i in range(length):
-                for j in alphabet:
-                    candidate = word[:i] + j + word[i+1:]
+                for j in ascii_lowercase:
+                    candidate = word[:i] + j + word[i + 1 :]
 
                     if candidate == endWord:
                         return edits + 1
