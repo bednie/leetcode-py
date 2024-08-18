@@ -8,14 +8,15 @@ class ListNode:
         self.next = next
 
 
-def middle(node: Optional[ListNode]) -> tuple:
+def middle(node: Optional[ListNode]) -> ListNode:
     slow, fast = node, node.next
 
     while fast and fast.next:
         slow = slow.next
         fast = fast.next.next
-    
+
     return slow
+
 
 def merge(left: Optional[ListNode], right: Optional[ListNode]) -> Optional[ListNode]:
     if not left:
@@ -24,8 +25,7 @@ def merge(left: Optional[ListNode], right: Optional[ListNode]) -> Optional[ListN
     if not right:
         return left
 
-    pre = ListNode(val=-999, next=None)
-    tail = pre
+    tail = pre = ListNode(val=-999, next=None)
 
     while left and right:
         if left.val < right.val:
@@ -37,7 +37,7 @@ def merge(left: Optional[ListNode], right: Optional[ListNode]) -> Optional[ListN
             tail.next = right
             tail = tail.next
             right = right.next
-        
+
     if left:
         tail.next = left
 
@@ -46,11 +46,12 @@ def merge(left: Optional[ListNode], right: Optional[ListNode]) -> Optional[ListN
 
     return pre.next
 
+
 class Solution:
     def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if not head or not head.next:
             return head
-        
+
         l, mid = head, middle(head)
         r = mid.next
         mid.next = None
