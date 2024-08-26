@@ -28,17 +28,23 @@ class Solution:
 
             return True
 
-        def backtrack() -> bool:
-            for row in range(9):
-                for col in range(9):
-                    if board[row][col] == ".":
-                        for num in "123456789":
-                            if is_valid(num, row, col):
-                                board[row][col] = num
-                                if backtrack():
-                                    return True
-                                board[row][col] = "."
-                        return False
-            return True
+        def backtrack(r: int, c: int) -> bool:
+            if c > 8:
+                return backtrack(r + 1, 0)
 
-        backtrack()
+            if r > 8:
+                return True
+
+            if board[r][c] != ".":
+                return backtrack(r, c + 1)
+
+            for num in "123456789":
+                if is_valid(num, r, c):
+                    board[r][c] = num
+                    if backtrack(r, c + 1):
+                        return True
+                    board[r][c] = "."
+
+            return False
+
+        backtrack(0, 0)
