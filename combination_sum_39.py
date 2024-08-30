@@ -6,26 +6,20 @@ class Solution:
         def backtrack(
             c: List[int],
             candidate_sum: int,
-            target: int,
             freq: dict,
-            frequencies: set,
-            result: List[List[int]],
         ) -> Optional[List[List[int]]]:
             if candidate_sum == target and str(freq) not in frequencies:
-                r = []
-                for k in freq:
-                    for v in range(freq[k]):
-                        r.append(k)
-
-                result.append(r)
+                result.append(c[:])
                 frequencies.add(str(freq))
-                
+            
                 return
 
-            for num in c:
+            for num in candidates:
                 if candidate_sum + num <= target:
+                    c.append(num)
                     freq[num] += 1
-                    backtrack(c, candidate_sum + num, target, freq, frequencies, result)
+                    backtrack(c, candidate_sum + num, freq)
+                    c.pop()
                     freq[num] -= 1
 
             return result
@@ -34,4 +28,4 @@ class Solution:
         freq = {num: 0 for num in candidates}
         frequencies = set()  
 
-        return backtrack(candidates, 0, target, freq, frequencies, result)
+        return backtrack([], 0, freq)
