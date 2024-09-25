@@ -10,15 +10,13 @@ class TreeNode:
 
 
 class Solution:
-    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         def helper(root: Optional[TreeNode]):
             if not root:
                 return
 
-            helper(root.left)
-
             self.vals.append(root.val)
-
+            helper(root.left)
             helper(root.right)
 
         self.vals = []
