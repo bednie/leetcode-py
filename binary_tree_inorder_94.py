@@ -16,9 +16,7 @@ class Solution:
                 return
 
             helper(root.left)
-
             self.vals.append(root.val)
-
             helper(root.right)
 
         self.vals = []
